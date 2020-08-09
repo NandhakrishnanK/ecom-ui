@@ -11,7 +11,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 export class ProductComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'userName', 'password'];
+  displayedColumns: string[] = ['id', 'userName', 'password', 'delete'];
   userForm = {
     userName: '',
     password: ''
@@ -38,6 +38,15 @@ export class ProductComponent implements OnInit {
     headers = headers.set('Access-Control-Allow-Origin', '*');
     this.http.get('//localhost:8080/user', {headers}).subscribe((data: any[])=>{
       this.dataSource = data;
+    });
+  }
+
+  deleteUser(id): void {
+    let headers = new HttpHeaders();
+    headers = headers.set('Access-Control-Allow-Origin', '*');
+    this.http.delete('//localhost:8080/user/' + id, {headers}).subscribe((data: any[])=>{
+      alert('Deleted User - ' + id);
+      this.showUserList();
     });
   }
 }
